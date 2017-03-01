@@ -20,7 +20,7 @@ class CreateAdministratorsTables extends Migration
             $table->string('email')->unique();
             $table->string('mobile',20);
             $table->string('password');
-            $table->string('forget_code');
+            $table->string('forget_code')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
