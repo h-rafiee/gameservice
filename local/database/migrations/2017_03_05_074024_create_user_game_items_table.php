@@ -16,12 +16,13 @@ class CreateUserGameItemsTable extends Migration
         Schema::create('user_game_items',function(Blueprint $table){
 
             $table->increments('id');
+            $table->integer('user_game_id')->unsigned();
             $table->foreign('user_game_id')
                 ->references('id')->on('user_games')
                 ->onDelete('cascade');
             $table->integer('shop_item_id')->unsigned();
-            $table->foreign('shop_items')
-                ->references('id')->on('games')
+            $table->foreign('shop_item_id')
+                ->references('id')->on('shop_items')
                 ->onDelete('cascade');
             $table->boolean('used')->default(0);
             $table->timestamps();

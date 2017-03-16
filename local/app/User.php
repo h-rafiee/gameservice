@@ -16,7 +16,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name','username','userID', 'email', 'password',
+        'mobile','about'
     ];
 
     /**
@@ -28,5 +29,21 @@ class User extends Authenticatable
         'password','userID','remember_token',
     ];
 
+
+    public function games(){
+        return $this->hasMany('App\UserGame','user_id');
+    }
+
+    public function achievements(){
+        return $this->belongsToMany('App\GameAchievement','user_game_achievements','user_id');
+    }
+
+    public function items(){
+        return $this->belongsToMany('App\ShopItem','user_game_items','user_id');
+    }
+
+    public function game_items(){
+        return $this->hasMany('App\UserGameItem','user_id');
+    }
 
 }

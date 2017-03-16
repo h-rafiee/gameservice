@@ -16,11 +16,12 @@ class CreateUserGameAchievementsTable extends Migration
         Schema::create('user_game_achievements',function(Blueprint $table){
 
             $table->increments('id');
+            $table->integer('user_game_id')->unsigned();
             $table->foreign('user_game_id')
                 ->references('id')->on('user_games')
                 ->onDelete('cascade');
             $table->integer('game_achievement_id')->unsigned();
-            $table->foreign('shop_items')
+            $table->foreign('game_achievement_id')
                 ->references('id')->on('game_achievements')
                 ->onDelete('cascade');
             $table->timestamps();

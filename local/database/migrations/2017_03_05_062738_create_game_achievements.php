@@ -16,6 +16,7 @@ class CreateGameAchievements extends Migration
         Schema::create('game_achievements',function(Blueprint $table){
 
             $table->increments('id');
+            $table->integer('game_id')->unsigned();
             $table->foreign('game_id')
                 ->references('id')->on('games')
                 ->onDelete('cascade');
