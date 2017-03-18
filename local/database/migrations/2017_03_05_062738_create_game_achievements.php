@@ -25,7 +25,6 @@ class CreateGameAchievements extends Migration
             $table->text('description')->nullable();
             $table->string('logo');
             $table->text('params')->nullable();
-            $table->text('script')->nullable();
             $table->timestamps();
 
         });

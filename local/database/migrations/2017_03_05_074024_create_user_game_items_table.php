@@ -20,9 +20,9 @@ class CreateUserGameItemsTable extends Migration
             $table->foreign('user_game_id')
                 ->references('id')->on('user_games')
                 ->onDelete('cascade');
-            $table->integer('shop_item_id')->unsigned();
-            $table->foreign('shop_item_id')
-                ->references('id')->on('shop_items')
+            $table->integer('game_item_id')->unsigned();
+            $table->foreign('game_item_id')
+                ->references('id')->on('game_items')
                 ->onDelete('cascade');
             $table->boolean('used')->default(0);
             $table->timestamps();

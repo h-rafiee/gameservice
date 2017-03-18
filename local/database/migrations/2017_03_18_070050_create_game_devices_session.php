@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGameShopTable extends Migration
+class CreateGameDevicesSession extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreateGameShopTable extends Migration
      */
     public function up()
     {
-        Schema::create('game_shop',function(Blueprint $table){
+        Schema::create('game_devices_session',function(Blueprint $table){
 
             $table->increments('id');
             $table->integer('game_id')->unsigned();
-            $table->foreign('game_id')
-                ->references('id')->on('games')
-                ->onDelete('cascade');
-            $table->string('slug')->unique();
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->string('token');
+            $table->string('refresh_token');
+            $table->dateTime('expire_datetime');
+            $table->text('params')->nullable();
             $table->timestamps();
 
         });
@@ -33,6 +34,6 @@ class CreateGameShopTable extends Migration
      */
     public function down()
     {
-        Schema::drop('game_shop');
+        Schema::drop('game_devices_session');
     }
 }

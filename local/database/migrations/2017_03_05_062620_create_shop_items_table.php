@@ -13,12 +13,12 @@ class CreateShopItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('shop_items',function(Blueprint $table){
+        Schema::create('game_items',function(Blueprint $table){
 
             $table->increments('id');
-            $table->integer('game_shop_id')->unsigned();
-            $table->foreign('game_shop_id')
-                ->references('id')->on('game_shop')
+            $table->integer('game_id')->unsigned();
+            $table->foreign('game_id')
+                ->references('id')->on('games')
                 ->onDelete('cascade');
             $table->string('slug')->unique();
             $table->string('title');
@@ -26,6 +26,7 @@ class CreateShopItemsTable extends Migration
             $table->integer('price')->unsigned()->defaul(0);
             $table->boolean('free_item')->default(1);
             $table->string('logo');
+            $table->text('params')->nullable();
             $table->timestamps();
 
         });
@@ -38,6 +39,6 @@ class CreateShopItemsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('shop_items');
+        Schema::drop('game_items');
     }
 }

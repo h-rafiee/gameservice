@@ -29,6 +29,7 @@ class CreateGamesTable extends Migration
             $table->text('previews')->nullable();
             $table->text('description')->nullable();
             $table->text('params')->nullable();
+            $table->string('api_key',20)->unique();
             $table->timestamps();
         });
     }
