@@ -41,9 +41,6 @@
         <label for="">Username : <br>
             <input type="text" value="{{$item->username}}" name="username">
         </label>
-        <label for="">Email : <br>
-            <input type="email" value="{{$item->email}}" name="email">
-        </label>
         <label for="">Password : <br>
             <input type="password" name="password">
         </label>

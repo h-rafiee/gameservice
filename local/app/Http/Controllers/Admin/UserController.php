@@ -40,15 +40,10 @@ class UserController extends Controller
     {
         $helper = new \App\Helpers\Helper();
 
-        $input = $request->all();
-        $input['email'] = $helper->fixEmail($input['email']);
-        $request->replace($input);
-
         $this->validate($request, [
 
             'name' => 'required',
             'username'=>'required|unique:users',
-            'email'=>'required|email|unique:users',
             'mobile'=>'required',
             'password'=>'required|min:3'
 
@@ -103,15 +98,10 @@ class UserController extends Controller
     {
         $helper = new \App\Helpers\Helper();
 
-        $input = $request->all();
-        $input['email'] = $helper->fixEmail($input['email']);
-        $request->replace($input);
-
         $this->validate($request, [
 
             'name' => 'required',
             'username'=>'required|unique:users,username,'.$id,
-            'email'=>'required|email|unique:users,email,'.$id,
             'mobile'=>'required',
         ]);
         $input = $request->all();

@@ -38,6 +38,9 @@
         <label for="">Title : <br>
             <input type="text" value="{{$item->title}}" name="title">
         </label>
+        <label for="">Type : <br>
+            <input type="text" value="{{$item->type}}" name="type">
+        </label>
         <label for="">Price : <br>
             <input type="text" value="{{$item->price}}" name="price">
         </label>

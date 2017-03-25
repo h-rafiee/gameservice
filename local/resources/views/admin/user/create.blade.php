@@ -38,9 +38,6 @@
         <label for="">Username : <br>
             <input type="text" name="username">
         </label>
-        <label for="">Email : <br>
-            <input type="email" name="email">
-        </label>
         <label for="">Password : <br>
             <input type="password" name="password">
         </label>

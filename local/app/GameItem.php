@@ -10,7 +10,8 @@ class GameItem extends Model
 
     protected $fillable = [
         'game_id','slug','title',
-        'description','price','free_item','logo'
+        'description','price','free_item','logo',
+        'type'
     ];
 
     public function game(){

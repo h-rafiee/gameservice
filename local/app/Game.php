@@ -10,7 +10,7 @@ class Game extends Model
 
     protected $fillable = [
         'category_id', 'publisher_id', 'package_name',
-        'title','logo','download_count','previews','description',
+        'title','logo','download_count','previews','api_key','description',
         'params'
     ];
 

@@ -51,12 +51,18 @@ class GameController extends Controller
         if($request->hasFile('logo')){
             $path = $request->logo->store('images', 'uploads');
         }
+        $helper = new \App\Helpers\Helper();
+        $api = str_random(4).$helper->generateRandomString(6);
+        while(\App\Game::where('api_key',$api)->count()>0){
+            $api = str_random(4).$helper->generateRandomString(6);
+        }
 
         \App\Game::create([
             'category_id' => $request->category_id,
             'package_name' => $request->package_name,
             'title'=>$request->title,
-            'logo'=>$path
+            'logo'=>$path,
+            'api_key'=>$api
         ]);
 
         return redirect()->route('games.index')

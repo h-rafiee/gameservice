@@ -56,5 +56,6 @@ class Kernel extends HttpKernel
         'admin.guest' => \App\Http\Middleware\AdminGuest::class ,
         'ajax' => \App\Http\Middleware\OnlyAjax::class,
         'client_credentials' => \Laravel\Passport\Http\Middleware\CheckClientCredentials::class,
+        'game_token'=>\App\Http\Middleware\GameToken::class,
     ];
 }

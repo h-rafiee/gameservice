@@ -66,6 +66,7 @@ class GameItemController extends Controller
             'game_id'=>$request->game_id,
             'slug'=>$request->slug,
             'title'=>$request->title,
+            'type'=>$request->type,
             'description'=>$request->description,
             'price'=>$request->price,
             'free_item' => ($request->price == 0)?1:0,
@@ -120,6 +121,7 @@ class GameItemController extends Controller
         $data = [
             'title'=>$request->title,
             'description'=>$request->description,
+            'type'=>$request->type,
             'price'=>$request->price,
             'free_item' => ($request->price == 0)?1:0,
         ];

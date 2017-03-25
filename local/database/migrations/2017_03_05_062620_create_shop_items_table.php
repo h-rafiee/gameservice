@@ -21,6 +21,7 @@ class CreateShopItemsTable extends Migration
                 ->references('id')->on('games')
                 ->onDelete('cascade');
             $table->string('slug')->unique();
+            $table->string('type')->nullable();
             $table->string('title');
             $table->text('description')->nullable();
             $table->integer('price')->unsigned()->defaul(0);

@@ -39,6 +39,9 @@
         <label for="">Price : <br>
             <input type="text" name="price">
         </label>
+        <label for="">Type : <br>
+            <input type="text" name="type">
+        </label>
         <label for="">Description : <br>
             <textarea name="description"></textarea>
         </label>
