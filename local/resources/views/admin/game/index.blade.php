@@ -22,6 +22,8 @@
                 <td>{{ ++$i }}</td>
                 <td>{{$item->package_name}}</td>
                 <td>{{$item->title}}</td>
+                <p id="api_key" class="hide">{{$item->api_key}}</p>
+                <td><button class="button" onclick="copyToClipboard('#api_key')">Api Key</button></td>
                 <td><a href="{{url('admin/achievements/game/'.$item->id)}}" class="button">Achievements</a></td>
                 <td><a href="{{url('admin/items/game/'.$item->id)}}" class="button">Shop</a></td>
                 <td><a href="{{ route('games.edit',$item->id) }}" class="button">Edit</a></td>
@@ -37,4 +39,18 @@
         </tbody>
     </table>
     {!! $items->render() !!}
+@endsection
+
+@section('script')
+    <script src="//code.jquery.com/jquery.min.js"></script>
+    <script>
+        function copyToClipboard(element) {
+            var $temp = $("<input>");
+            $("body").append($temp);
+            $temp.val($(element).text()).select();
+            document.execCommand("copy");
+            $temp.remove();
+            alert("copied");
+        }
+    </script>
 @endsection
