@@ -16,8 +16,13 @@ use Illuminate\Http\Request;
 Route::group(['namespace'=>'Api'],function() {
 
     Route::post('get_access','GlobalController@access');
+    Route::post('get_access_refresh','GlobalController@refresh');
+
 
     Route::group(['middleware'=>'game_token'],function(){
+
+        Route::post('logout','GlobalController@logout');
+
 
         Route::get('achievements',function(Request $request){
             return response()->json(\App\GameAchievement::where('game_id',$request->device->game->id)->get());
@@ -87,9 +92,49 @@ Route::group(['namespace'=>'Api'],function() {
             return response()->json($data);
         });
 
+
+        Route::get('user',function(Request $request){
+            $data['status'] = 'fail';
+            if($request->device->user_id == NULL){
+                $data['message']='user must be login,not valid request';
+                return response(json_encode($data),500);
+            }
+            $user = \App\User::find($request->device->user_id);
+            $data['status']='done';
+            $data['user']=$user;
+            return response()->json($data);
+        });
+
+        Route::post('user_edit',function(Request $request){
+            $data['status'] = 'fail';
+            if($request->device->user_id == NULL){
+                $data['message']='user must be login,not valid request';
+                return response(json_encode($data),500);
+            }
+            $user = \App\User::find($request->device->user_id);
+            if( $user->username != $request->username && \App\User::where('username',$request->username)->count()>0){
+                $data['message']='Username exist';
+                return response(json_encode($data),500);
+            }
+
+            if( $user->mobile != $request->mobile && \App\User::where('mobile',$request->mobile)->count()>0){
+                $data['message']='Mobile exist';
+                return response(json_encode($data),500);
+            }
+            $user->username = $request->username;
+            $user->mobile = $request->mobile;
+            if(!empty($request->password)){
+                $user->password =  Hash::make($request->password);
+            }
+            $user->save();
+            $data['status']='done';
+            $data['message']='User edited';
+            return response()->json($data);
+        });
+
         Route::get('user_game_info',function(Request $request){
             $data['status'] = 'fail';
-            if($request->device->user_id != NULL){
+            if($request->device->user_id == NULL){
                 $data['message']='user must be login,not valid request';
                 return response(json_encode($data),500);
             }
@@ -104,7 +149,7 @@ Route::group(['namespace'=>'Api'],function() {
 
         Route::post('add_item_to_user',function(Request $request){
             $data['status'] = 'fail';
-            if($request->device->user_id != NULL){
+            if($request->device->user_id == NULL){
                 $data['message']='user must be login,not valid request';
                 return response(json_encode($data),500);
             }
@@ -122,7 +167,7 @@ Route::group(['namespace'=>'Api'],function() {
 
         Route::post('add_achievement_to_user',function(Request $request){
             $data['status'] = 'fail';
-            if($request->device->user_id != NULL){
+            if($request->device->user_id == NULL){
                 $data['message']='user must be login,not valid request';
                 return response(json_encode($data),500);
             }
