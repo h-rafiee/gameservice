@@ -18,6 +18,7 @@ class CreateGameDevicesSession extends Migration
             $table->increments('id');
             $table->integer('game_id')->unsigned();
             $table->integer('user_id')->unsigned()->nullable();
+            $table->string('imei',100)->unique();
             $table->string('token');
             $table->string('refresh_token');
             $table->dateTime('expire_datetime');
