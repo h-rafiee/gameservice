@@ -43,7 +43,7 @@ Route::group(['namespace'=>'Api'],function() {
                 ->first();
             if(empty($user)){
                 $data['message'] = 'Username/Phone not exist!';
-                return response(json_encode($data),500);
+                return response(json_encode($data),444);
             }
             if(Hash::check($request->password,$user->password)){
                 $request->device->user_id = $user->id;
@@ -61,7 +61,7 @@ Route::group(['namespace'=>'Api'],function() {
                 return response()->json($data);
             }
             $data['message'] = 'Password not correct!';
-            return response(json_encode($data),500);
+            return response(json_encode($data),444);
         });
 
         Route::post('sign_up',function(Request $request){
@@ -70,7 +70,7 @@ Route::group(['namespace'=>'Api'],function() {
                 ->count();
             if($user_exist>0){
                 $data['message'] = 'Username exist!';
-                return response(json_encode($data),500);
+                return response(json_encode($data),444);
             }
             $helper = new \App\Helpers\Helper();
             $userID = $helper->generateNumber(10);
@@ -97,7 +97,7 @@ Route::group(['namespace'=>'Api'],function() {
             $data['status'] = 'fail';
             if($request->device->user_id == NULL){
                 $data['message']='user must be login,not valid request';
-                return response(json_encode($data),500);
+                return response(json_encode($data),444);
             }
             $user = \App\User::find($request->device->user_id);
             $data['status']='done';
@@ -109,17 +109,17 @@ Route::group(['namespace'=>'Api'],function() {
             $data['status'] = 'fail';
             if($request->device->user_id == NULL){
                 $data['message']='user must be login,not valid request';
-                return response(json_encode($data),500);
+                return response(json_encode($data),444);
             }
             $user = \App\User::find($request->device->user_id);
             if( $user->username != $request->username && \App\User::where('username',$request->username)->count()>0){
                 $data['message']='Username exist';
-                return response(json_encode($data),500);
+                return response(json_encode($data),444);
             }
 
             if( $user->mobile != $request->mobile && \App\User::where('mobile',$request->mobile)->count()>0){
                 $data['message']='Mobile exist';
-                return response(json_encode($data),500);
+                return response(json_encode($data),444);
             }
             $user->username = $request->username;
             $user->mobile = $request->mobile;
@@ -137,7 +137,7 @@ Route::group(['namespace'=>'Api'],function() {
             $data['status'] = 'fail';
             if($request->device->user_id == NULL){
                 $data['message']='user must be login,not valid request';
-                return response(json_encode($data),500);
+                return response(json_encode($data),444);
             }
             $user_game = \App\UserGame::with(['items','achievements'])
                 ->where('game_id',$request->device->game_id)
@@ -152,7 +152,7 @@ Route::group(['namespace'=>'Api'],function() {
             $data['status'] = 'fail';
             if($request->device->user_id == NULL){
                 $data['message']='user must be login,not valid request';
-                return response(json_encode($data),500);
+                return response(json_encode($data),444);
             }
             $user_game = \App\UserGame::where('game_id',$request->device->game_id)
                 ->where('user_id',$request->device->user_id)
@@ -170,7 +170,7 @@ Route::group(['namespace'=>'Api'],function() {
             $data['status'] = 'fail';
             if($request->device->user_id == NULL){
                 $data['message']='user must be login,not valid request';
-                return response(json_encode($data),500);
+                return response(json_encode($data),444);
             }
             $user_game = \App\UserGame::where('game_id',$request->device->game_id)
                 ->where('user_id',$request->device->user_id)

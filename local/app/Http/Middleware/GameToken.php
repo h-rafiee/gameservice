@@ -24,19 +24,19 @@ class GameToken
                 if(empty($device)){
                     $data['status']='fail';
                     $data['message']='Authorization token not valid.';
-                    return response(json_encode($data),500);
+                    return response(json_encode($data),444);
                 }
                 if($device->expire_datetime < date("Y-m-d H:i:s")){
                     $data['status']='fail';
                     $data['message']='Token is expired!';
                     $data['job']='refresh';
-                    return response(json_encode($data),500);
+                    return response(json_encode($data),444);
                 }
                 $request->device = $device;
                 return $next($request);
                 break;
             default:
-                abort(502);
+                abort(400);
         }
         abort(404);
     }

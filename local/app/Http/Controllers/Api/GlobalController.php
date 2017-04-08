@@ -10,7 +10,7 @@ class GlobalController extends Controller
     public function access(Request $request){
         $game = \App\Game::where('api_key',$request->header('key'))->first();
         if(empty($game)){
-            abort(402);
+            abort(404);
         }
         $helper = new \App\Helpers\Helper();
         $device = new \App\GameToken();
@@ -29,7 +29,7 @@ class GlobalController extends Controller
         if(empty($device)){
             $data['status']='fail';
             $data['message']='Authorization token not valid.';
-            return response(json_encode($data),500);
+            return response(json_encode($data),444);
         }
         $helper = new \App\Helpers\Helper();
         $game = \App\Game::find($device->game_id);
@@ -45,11 +45,11 @@ class GlobalController extends Controller
         $data['status'] = 'fail';
         if($request->device->imei != $request->imei){
             $data['message']='Request not valid';
-            return response(json_encode($data),500);
+            return response(json_encode($data),444);
         }
         if($request->device->user_id == NULL){
             $data['message']='user must be login,not valid request';
-            return response(json_encode($data),500);
+            return response(json_encode($data),444);
         }
         $request->device->user_id = null;
         $request->device->save();
