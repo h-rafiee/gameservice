@@ -123,6 +123,7 @@ Route::group(['namespace'=>'Api'],function() {
             }
             $user->username = $request->username;
             $user->mobile = $request->mobile;
+            $user->name = $request->name;
             if(!empty($request->password)){
                 $user->password =  Hash::make($request->password);
             }
