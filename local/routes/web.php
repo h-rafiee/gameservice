@@ -32,6 +32,15 @@ Route::group(['prefix'=>'admin','namespace'=>'Admin','middleware'=>'admin.auth']
         'store','edit','destroy','update'
     ]]);
 
+
+    Route::get('leaderboards/game/{id}','GameLeaderboardController@index');
+    Route::get('leaderboards/game/{id}/add','GameLeaderboardController@create');
+
+    Route::resource('leaderboards','GameLeaderboardController',['only'=>[
+        'store','edit','destroy','update'
+    ]]);
+
+
     // Ajax
     Route::group(['middleware' => 'ajax','prefix'=>'ajax'],function(){
 

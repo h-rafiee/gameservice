@@ -25,6 +25,7 @@
                 <p id="api_key" class="hide">{{$item->api_key}}</p>
                 <td><button class="button" onclick="copyToClipboard('#api_key')">Api Key</button></td>
                 <td><a href="{{url('admin/achievements/game/'.$item->id)}}" class="button">Achievements</a></td>
+                <td><a href="{{url('admin/leaderboards/game/'.$item->id)}}" class="button">Leaderboards</a></td>
                 <td><a href="{{url('admin/items/game/'.$item->id)}}" class="button">Shop</a></td>
                 <td><a href="{{ route('games.edit',$item->id) }}" class="button">Edit</a></td>
                 <td>
