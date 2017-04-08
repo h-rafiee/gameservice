@@ -31,4 +31,8 @@ class UserGame extends Model
     public function items(){
         return $this->hasMany('App\UserGameItem','user_game_id');
     }
+
+    public function leaderboards(){
+        return $this->hasMany('App\UserGameLeaderboard','user_game_id');
+    }
 }
