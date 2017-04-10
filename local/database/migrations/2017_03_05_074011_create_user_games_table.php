@@ -24,7 +24,7 @@ class CreateUserGamesTable extends Migration
             $table->foreign('game_id')
                 ->references('id')->on('games')
                 ->onDelete('cascade');
-            $table->dateTime('last_time_active');
+            $table->dateTime('last_time_active')->nullable();
             $table->text('params')->nullable();
             $table->timestamps();
         });
