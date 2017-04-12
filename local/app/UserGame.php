@@ -9,7 +9,7 @@ class UserGame extends Model
     protected $table = 'user_games';
 
     protected $fillable = [
-        'user_id', 'game_id', 'last_time_active','params'
+        'user_id', 'game_id', 'last_time_active','profile_pic','params'
     ];
 
     protected $hidden = [

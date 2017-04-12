@@ -184,6 +184,62 @@ Route::group(['namespace'=>'Api'],function() {
             return response()->json($data);
         });
 
+        Route::post('user_game_profile',function(Request $request){
+            $data['status'] = 'fail';
+            if($request->device->user_id == NULL){
+                $data['message']='user must be login,not valid request';
+                return response(json_encode($data),444);
+            }
+            $user_game = \App\UserGame::where('game_id',$request->device->game_id)
+                ->where('user_id',$request->device->user_id)
+                ->first();
+
+            $path = '';
+
+            if($request->hasFile('profile_pic')){
+                $path = $request->profile_pic->store('images', 'uploads');
+            }
+            if(empty($path)){
+                $data['message']='error on upload';
+                return response(json_encode($data),444);
+            }
+            $user_game->profile_pic = $path;
+            $user_game->save();
+            $data['status']='done';
+            $data['message']='profile picture added to user';
+            return response()->json($data);
+        });
+
+        Route::post('update_score_user',function(Request $request){
+            $data['status'] = 'fail';
+            if($request->device->user_id == NULL){
+                $data['message']='user must be login,not valid request';
+                return response(json_encode($data),444);
+            }
+            $user_game = \App\UserGame::where('game_id',$request->device->game_id)
+                ->where('user_id',$request->device->user_id)
+                ->first();
+            $game_leaderboard = \App\GameLeaderboard::where('slug',$request->leaderboard_slug)->first();
+            $score = \App\UserGameLeaderboard::updateOrCreate(
+                ['user_game_id'=>$user_game->id , 'game_leaderboard_id' => $game_leaderboard->id ],
+                ['score' => $request->score]
+            );
+            $data['status']='done';
+            $data['message']='score updated for user';
+            return response()->json($data);
+        });
+
+        Route::get('list_leaderboards_game',function(Request $request){
+            $game_leaderboard = \App\GameLeaderboard::where('game_id',$request->device->game_id)->get();
+            $data['status']='done';
+            $data['leaderboards']  = $game_leaderboard;
+            return response()->json($data);
+        });
+
+        Route::get('leaderboard/{slug}',function(Request $request,$slug){
+
+        });
+
         Route::post('add_order_user',function(Request $request){
 
         });
