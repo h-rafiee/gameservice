@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGameDevicesSession extends Migration
+class CreateUploadRequestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,15 @@ class CreateGameDevicesSession extends Migration
      */
     public function up()
     {
-        Schema::create('game_devices_session',function(Blueprint $table){
+        Schema::create('uploads_requests',function(Blueprint $table){
 
             $table->increments('id');
             $table->integer('game_id')->unsigned();
             $table->integer('user_id')->unsigned()->nullable();
-            $table->string('imei',100);
-            $table->string('token');
-            $table->string('refresh_token');
-            $table->dateTime('expire_datetime');
-            $table->text('params')->nullable();
+            $table->string('access');
+            $table->boolean('uploaded')->default(0);
+            $table->dateTime('expired_time');
             $table->timestamps();
-
-            $table->unique(['game_id', 'imei']);
 
         });
     }
@@ -37,6 +33,6 @@ class CreateGameDevicesSession extends Migration
      */
     public function down()
     {
-        Schema::drop('game_devices_session');
+        Schema::drop('uploads_requests');
     }
 }

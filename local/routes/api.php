@@ -17,6 +17,36 @@ Route::group(['namespace'=>'Api'],function() {
 
     Route::post('get_access','GlobalController@access');
     Route::post('get_access_refresh','GlobalController@refresh');
+    Route::post('get_upload_access','GlobalController@upload_request');
+
+    Route::post('user_game_profile/{access}',function(Request $request,$access){
+        $upload_request = \App\UploadRequest::where('access',$access)->where('uploaded',0)->where('expired_time','>',date("Y-m-d H:i:s"))->first();
+        $data['status'] = 'fail';
+        if(empty($upload_request)){
+            $data['message']='Request not valid!';
+            return response(json_encode($data),444);
+        }
+        $user_game = \App\UserGame::where('game_id',$upload_request->game_id)
+            ->where('user_id',$upload_request->user_id)
+            ->first();
+
+        $path = '';
+
+        if($request->hasFile('profile_pic')){
+            $path = $request->profile_pic->store('images', 'uploads');
+        }
+        if(empty($path)){
+            $data['message']='error on upload';
+            return response(json_encode($data),444);
+        }
+        $user_game->profile_pic = $path;
+        $user_game->save();
+        $upload_request->uploaded=1;
+        $upload_request->save();
+        $data['status']='done';
+        $data['message']='profile picture added to user';
+        return response()->json($data);
+    });
 
 
     Route::group(['middleware'=>'game_token'],function(){
@@ -184,32 +214,6 @@ Route::group(['namespace'=>'Api'],function() {
             return response()->json($data);
         });
 
-        Route::post('user_game_profile',function(Request $request){
-            $data['status'] = 'fail';
-            if($request->device->user_id == NULL){
-                $data['message']='user must be login,not valid request';
-                return response(json_encode($data),444);
-            }
-            $user_game = \App\UserGame::where('game_id',$request->device->game_id)
-                ->where('user_id',$request->device->user_id)
-                ->first();
-
-            $path = '';
-
-            if($request->hasFile('profile_pic')){
-                $path = $request->profile_pic->store('images', 'uploads');
-            }
-            if(empty($path)){
-                $data['message']='error on upload';
-                return response(json_encode($data),444);
-            }
-            $user_game->profile_pic = $path;
-            $user_game->save();
-            $data['status']='done';
-            $data['message']='profile picture added to user';
-            return response()->json($data);
-        });
-
         Route::post('update_score_user',function(Request $request){
             $data['status'] = 'fail';
             if($request->device->user_id == NULL){
@@ -237,7 +241,20 @@ Route::group(['namespace'=>'Api'],function() {
         });
 
         Route::get('leaderboard/{slug}',function(Request $request,$slug){
-
+            $data['status']='fail';
+            $game_leaderboard = \App\GameLeaderboard::where('slug',$slug)->first();
+            if(empty($game_leaderboard)){
+                $data['message']='leaderbaord not exist';
+                return response(json_encode($data),444);
+            }
+            $leaderbaord = \App\UserGameLeaderboard::get_rank_list($game_leaderboard->id);
+            $current_user = null;
+            if($request->device->user_id != NULL)
+                $current_user = \App\UserGameLeaderboard::get_user_rank($game_leaderboard->id,$request->device->user_id);
+            $data['status']='done';
+            $data['current_user_rank'] = $current_user;
+            $data['leaderboard']=$leaderbaord;
+            return response()->json($data);
         });
 
         Route::post('add_order_user',function(Request $request){
