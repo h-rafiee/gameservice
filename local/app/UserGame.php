@@ -25,11 +25,11 @@ class UserGame extends Model
     }
 
     public function achievements(){
-        return $this->hasMany('App\UserGameAchievement','user_game_id');
+        return $this->belongsToMany('App\GameAchievement','user_game_achievements','user_game_id','game_achievement_id');
     }
 
     public function items(){
-        return $this->hasMany('App\UserGameItem','user_game_id');
+        return $this->belongsToMany('App\GameItem','user_game_items','user_game_id','game_item_id');
     }
 
     public function leaderboards(){
