@@ -12,7 +12,7 @@
         Achievement Game {!! $game->title !!}
     </h3>
     <hr>
-    <a href="{{ url("admin/achievements/game/1/add") }}"> Create New Item</a>
+    <a href="{{ url("admin/achievements/game/{$game->id}/add") }}"> Create New Item</a>
 
     <table class="u-full-width">
         <tbody>
