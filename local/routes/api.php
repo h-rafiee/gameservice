@@ -163,6 +163,24 @@ Route::group(['namespace'=>'Api'],function() {
             return response()->json($data);
         });
 
+        Route::post('set_user_game_info',function(Request $request){
+            $data['status'] = 'fail';
+            if($request->device->user_id == NULL){
+                $data['message']='user must be login,not valid request';
+                return response(json_encode($data),444);
+            }
+            $user_game = \App\UserGame::with(['items','achievements'])
+                ->where('game_id',$request->device->game_id)
+                ->where('user_id',$request->device->user_id)
+                ->first();
+            $user_game->params = $request->params;
+            $user_game->save();
+            $data['status']='done';
+            $data['message']='User game data updated';
+            $data['user_game']=$user_game;
+            return response()->json($data);
+        });
+
         Route::get('user_game_info',function(Request $request){
             $data['status'] = 'fail';
             if($request->device->user_id == NULL){
