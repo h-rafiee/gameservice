@@ -10,7 +10,7 @@ class GameLeaderboard extends Model
 
     protected $fillable = [
         'game_id','slug', 'title', 'logo',
-        'description','params'
+        'description','params','priority'
     ];
 
     public function game(){

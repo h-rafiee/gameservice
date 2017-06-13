@@ -23,6 +23,7 @@ class CreateLeaderboardsTable extends Migration
             $table->string('slug')->unique();
             $table->string('title');
             $table->text('description')->nullable();
+            $table->integer('priority')->unsigned()->default(0);
             $table->string('logo');
             $table->text('params')->nullable();
             $table->timestamps();

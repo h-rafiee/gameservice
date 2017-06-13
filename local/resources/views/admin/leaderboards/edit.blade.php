@@ -38,6 +38,9 @@
         <label for="">Title : <br>
             <input type="text" value="{{$item->title}}" name="title">
         </label>
+        <label for="">Priority : <br>
+            <input type="number" min="0" value="{{$item->priority}}" name="priority">
+        </label>
         <label for="">Description : <br>
             <textarea name="description">{{$item->description}}</textarea>
         </label>

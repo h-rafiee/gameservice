@@ -62,6 +62,7 @@ class GameLeaderboardController extends Controller
             'slug'=>$request->slug,
             'title'=>$request->title,
             'description'=>$request->description,
+            'priority'=>$request->priority,
             'logo'=>$path,
         ]);
 
@@ -110,6 +111,7 @@ class GameLeaderboardController extends Controller
         $data = [
             'title'=>$request->title,
             'description'=>$request->description,
+            'priority'=>$request->priority,
         ];
         $path = '';
 

@@ -36,6 +36,9 @@
         <label for="">Title : <br>
             <input type="text" name="title">
         </label>
+        <label for="">Priority : <br>
+            <input type="number" min="0" value="0" name="priority">
+        </label>
         <label for="">Description : <br>
             <textarea name="description"></textarea>
         </label>
