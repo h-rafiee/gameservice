@@ -173,7 +173,6 @@ Route::group(['namespace'=>'Api'],function() {
                 ->where('game_id',$request->device->game_id)
                 ->where('user_id',$request->device->user_id)
                 ->first();
-            $user_game->params = $request->params;
             $user_game->save();
             $data['status']='done';
             $data['message']='User game data updated';
@@ -272,6 +271,27 @@ Route::group(['namespace'=>'Api'],function() {
             $data['status']='done';
             $data['current_user_rank'] = $current_user;
             $data['leaderboard']=$leaderbaord;
+            return response()->json($data);
+        });
+
+        Route::get('global_leaderboard','RankController@global_rank');
+
+        Route::post('user_params/{parameter}',function(Request $request,$parameter){
+            $data['status'] = 'fail';
+            if($request->device->user_id == NULL){
+                $data['message']='user must be login,not valid request';
+                return response(json_encode($data),444);
+            }
+            $user_game = \App\UserGame::with(['items','achievements'])
+                ->where('game_id',$request->device->game_id)
+                ->where('user_id',$request->device->user_id)
+                ->first();
+            $params = json_decode($user_game->params,TRUE);
+            $params[$parameter] = $request->val;
+            $user_game->params = json_encode($params);
+            $data['status']='done';
+            $data['message']='User game Parameter data updated';
+            $data['user_game']=$user_game;
             return response()->json($data);
         });
 
