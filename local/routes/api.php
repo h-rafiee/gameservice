@@ -289,6 +289,7 @@ Route::group(['namespace'=>'Api'],function() {
             $params = json_decode($user_game->params,TRUE);
             $params[$parameter] = $request->val;
             $user_game->params = json_encode($params);
+            $user_game->save();
             $data['status']='done';
             $data['message']='User game Parameter data updated';
             $data['user_game']=$user_game;
