@@ -173,6 +173,7 @@ Route::group(['namespace'=>'Api'],function() {
                 ->where('game_id',$request->device->game_id)
                 ->where('user_id',$request->device->user_id)
                 ->first();
+            $user_game->params = $request->params;
             $user_game->save();
             $data['status']='done';
             $data['message']='User game data updated';
