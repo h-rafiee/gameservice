@@ -265,10 +265,10 @@ Route::group(['namespace'=>'Api'],function() {
                 $data['message']='leaderbaord not exist';
                 return response(json_encode($data),444);
             }
-            $leaderbaord = \App\UserGameLeaderboard::get_rank_list($game_leaderboard->id);
+            $leaderbaord = \App\UserGameLeaderboard::with(['user_game'])->get_rank_list($game_leaderboard->id);
             $current_user = null;
             if($request->device->user_id != NULL)
-                $current_user = \App\UserGameLeaderboard::get_user_rank($game_leaderboard->id,$request->device->user_id);
+                $current_user = \App\UserGameLeaderboard::with(['user_game'])->get_user_rank($game_leaderboard->id,$request->device->user_id);
             $data['status']='done';
             $data['current_user_rank'] = $current_user;
             $data['leaderboard']=$leaderbaord;

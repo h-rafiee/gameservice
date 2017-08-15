@@ -31,7 +31,8 @@ class RankController extends Controller
                 u.id as user_id,
                 u.username,
                 u.name,
-                u.profile_pic,".implode(",",$stringQry)."
+                ug.params,
+                ug.profile_pic,".implode(",",$stringQry)."
                 FROM user_games as ug
                 JOIN users as u ON u.id = ug.user_id
             ) AS l , (SELECT @rownum := 0) r
